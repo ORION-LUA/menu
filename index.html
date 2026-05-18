@@ -2,22 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="src/favicon.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css" />
-    
-    <title>NUI React Boilerplate</title>
+    <title>Menu Test</title>
     <script type="module" crossorigin src="assets/index.b957513f.js"></script>
     <link rel="stylesheet" href="assets/index.b284bac3.css">
-  </head>
-    <script>
-      window.invokeNative = false; 
-      // Bu sayede site kendini FiveM disinda zannedip her zaman gorunur yapacaktir.
-    </script>
-  <body>
+    
+    <style>
+        body, html, #root {
+            background-color: transparent !important;
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+    </style>
+</head>
+<body>
     <div id="root"></div>
-  </body>
+    <script>
+        // Menünün "FiveM'de değilim" sanıp kendini kapatmasını engeller
+        window.invokeNative = false;
+        
+        // Menüye "Açıl" mesajını JS içinden zorla gönderiyoruz
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                window.postMessage({action: 'displayFreecam', visible: true}, '*');
+            }, 1000);
+        });
+    </script>
+</body>
 </html>
