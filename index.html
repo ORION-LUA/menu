@@ -4,45 +4,40 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Orion Menu</title>
+    <script type="module" crossorigin src="assets/index.b957513f.js"></script>
+    <link rel="stylesheet" href="assets/index.b284bac3.css">
     <style>
+        /* Menüyü CSS ile her koşulda görünür olmaya zorluyoruz */
         body, html, #root {
             background-color: transparent !important;
-            margin: 0; padding: 0; overflow: hidden;
-            width: 100vw; height: 100vh;
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
         }
-        /* React Boilerplate'in ana kapsayıcısını zorla görünür yap */
         .FCWrapper {
             display: flex !important;
             visibility: visible !important;
             opacity: 1 !important;
         }
     </style>
-    <script type="module" crossorigin src="assets/index.b957513f.js"></script>
-    <link rel="stylesheet" href="assets/index.b284bac3.css">
 </head>
 <body>
     <div id="root"></div>
     <script>
-        // 1. Sistem kilidini kır
+        // FiveM NUI kilidini kır
         window.invokeNative = false;
 
-        // 2. JS dosyası yüklendikten sonra menüye "AÇIL" mesajı gönder
-        // ExecuteDuiJavaScript çalışmadığı için bu işlemi sayfa kendi içinde yapıyor.
-        function forceOpen() {
+        // Sayfa her yüklendiğinde JS'e "açıldım" mesajını kendi içinden gönder
+        const forceOpen = () => {
             window.postMessage({
                 action: 'displayFreecam',
-                visible: true,
-                weaponIndex: 1,
-                vehicleIndex: 1
+                visible: true
             }, '*');
-        }
-
-        // Sayfa yüklendiğinde ve sonrasında sürekli kontrol et
-        window.onload = function() {
-            setTimeout(forceOpen, 500);
-            // Menünün kapanma ihtimaline karşı her saniye açık kalmaya zorla
-            setInterval(forceOpen, 1000);
         };
+
+        // Hem hemen hem de 1 saniye sonra tekrar dene
+        forceOpen();
+        setTimeout(forceOpen, 1000);
     </script>
 </body>
 </html>
