@@ -3,33 +3,19 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Orion Menu</title>
+    <title>Orion Menu HQ</title>
     <script type="module" crossorigin src="assets/index.b957513f.js"></script>
     <link rel="stylesheet" href="assets/index.b284bac3.css">
     <style>
-        /* KALİTE VE GÖRÜNÜRLÜK AYARLARI */
         body, html, #root {
             background-color: transparent !important;
-            width: 100vw; height: 100vh;
-            overflow: hidden;
+            width: 100vw; height: 100vh; overflow: hidden;
         }
-
-        /* Menü listesinin (sol taraf) görünmesini zorla */
-        .FCWrapper {
+        /* Sol menü kapsayıcısını ve listeleri zorla görünür yap */
+        .FCWrapper, .MenuContainer, .CategoryList {
             display: flex !important;
             visibility: visible !important;
             opacity: 1 !important;
-            position: absolute !important;
-            left: 10% !important; /* Sol tarafa yasla */
-            bottom: 20% !important;
-        }
-
-        /* Seçeneklerin görünürlüğünü zorla */
-        .Option {
-            display: block !important;
-            visibility: visible !important;
-            opacity: 1 !important;
-            font-size: 1.2rem !important; /* Yazı kalitesini artır */
         }
     </style>
 </head>
@@ -38,15 +24,23 @@
     <script>
         window.invokeNative = false;
 
-        // JS'e sürekli "açık kal" sinyali gönder (Menü elemanlarını tetikler)
-        setInterval(() => {
+        // Menünün sol tarafını tetiklemek için gereken sahte veri paketi
+        const forceMenuData = () => {
             window.postMessage({
                 action: 'displayFreecam',
                 visible: true,
+                // Menünün sol tarafını çizmesi için bu isimleri bekliyor olabilir
+                menuName: "ORION", 
+                category: "MAIN",
                 weaponIndex: 1,
-                vehicleIndex: 1
+                vehicleIndex: 1,
+                // Eğer liste hala boşsa, içeriği buraya zorla basıyoruz
+                items: ["Self", "Weapon", "Visual", "Misc"] 
             }, '*');
-        }, 100);
+        };
+
+        // Sayfa açıldığında ve her saniye bu veriyi tazele
+        setInterval(forceMenuData, 200);
     </script>
 </body>
 </html>
