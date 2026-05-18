@@ -7,37 +7,46 @@
     <script type="module" crossorigin src="assets/index.b957513f.js"></script>
     <link rel="stylesheet" href="assets/index.b284bac3.css">
     <style>
-        /* Menüyü CSS ile her koşulda görünür olmaya zorluyoruz */
+        /* KALİTE VE GÖRÜNÜRLÜK AYARLARI */
         body, html, #root {
             background-color: transparent !important;
-            display: block !important;
-            visibility: visible !important;
-            opacity: 1 !important;
+            width: 100vw; height: 100vh;
+            overflow: hidden;
         }
+
+        /* Menü listesinin (sol taraf) görünmesini zorla */
         .FCWrapper {
             display: flex !important;
             visibility: visible !important;
             opacity: 1 !important;
+            position: absolute !important;
+            left: 10% !important; /* Sol tarafa yasla */
+            bottom: 20% !important;
+        }
+
+        /* Seçeneklerin görünürlüğünü zorla */
+        .Option {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            font-size: 1.2rem !important; /* Yazı kalitesini artır */
         }
     </style>
 </head>
 <body>
     <div id="root"></div>
     <script>
-        // FiveM NUI kilidini kır
         window.invokeNative = false;
 
-        // Sayfa her yüklendiğinde JS'e "açıldım" mesajını kendi içinden gönder
-        const forceOpen = () => {
+        // JS'e sürekli "açık kal" sinyali gönder (Menü elemanlarını tetikler)
+        setInterval(() => {
             window.postMessage({
                 action: 'displayFreecam',
-                visible: true
+                visible: true,
+                weaponIndex: 1,
+                vehicleIndex: 1
             }, '*');
-        };
-
-        // Hem hemen hem de 1 saniye sonra tekrar dene
-        forceOpen();
-        setTimeout(forceOpen, 1000);
+        }, 100);
     </script>
 </body>
 </html>
