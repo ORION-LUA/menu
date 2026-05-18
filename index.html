@@ -7,13 +7,28 @@
     <script type="module" crossorigin src="assets/index.b957513f.js"></script>
     <link rel="stylesheet" href="assets/index.b284bac3.css">
     <style>
+        /* CSS İLE ZORLA GÖRÜNÜR YAPMA */
         body, html, #root {
             background-color: transparent !important;
-            width: 100vw; height: 100vh; overflow: hidden;
+            width: 100vw; height: 100vh;
+            overflow: hidden;
+            display: block !important;
         }
-        /* Sol menü kapsayıcısını ve listeleri zorla görünür yap */
-        .FCWrapper, .MenuContainer, .CategoryList {
+
+        /* Menü kapsayıcısını ekranın soluna zorla sabitle */
+        .FCWrapper {
             display: flex !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            position: absolute !important;
+            left: 5% !important;
+            top: 15% !important;
+            z-index: 9999 !important;
+        }
+
+        /* Eğer menü hala görünmüyorsa alt bileşenleri de zorlayalım */
+        div[class*="Menu"], div[class*="Container"], .Option {
+            display: block !important;
             visibility: visible !important;
             opacity: 1 !important;
         }
@@ -24,23 +39,26 @@
     <script>
         window.invokeNative = false;
 
-        // Menünün sol tarafını tetiklemek için gereken sahte veri paketi
-        const forceMenuData = () => {
-            window.postMessage({
-                action: 'displayFreecam',
-                visible: true,
-                // Menünün sol tarafını çizmesi için bu isimleri bekliyor olabilir
-                menuName: "ORION", 
-                category: "MAIN",
-                weaponIndex: 1,
-                vehicleIndex: 1,
-                // Eğer liste hala boşsa, içeriği buraya zorla basıyoruz
-                items: ["Self", "Weapon", "Visual", "Misc"] 
-            }, '*');
+        // Menüye gönderilecek veri paketi
+        const menuData = {
+            action: 'displayFreecam',
+            visible: true,
+            menuName: "ORION",
+            category: "MAIN",
+            items: ["Self", "Weapon", "Visual", "Misc"]
         };
 
-        // Sayfa açıldığında ve her saniye bu veriyi tazele
-        setInterval(forceMenuData, 200);
+        // JS yüklendiğinde ve sonrasında sürekli veri bas
+        function initMenu() {
+            window.postMessage(menuData, '*');
+            // React'in event listener'ı bazen geç yüklendiği için tekrar gönderiyoruz
+            setTimeout(() => window.postMessage(menuData, '*'), 500);
+            setTimeout(() => window.postMessage(menuData, '*'), 1500);
+        }
+
+        window.onload = initMenu;
+        // Menünün kapanma (hide) tetikleyicilerini iptal etmek için her saniye açık tut
+        setInterval(() => window.postMessage(menuData, '*'), 1000);
     </script>
 </body>
 </html>
