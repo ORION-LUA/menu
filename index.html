@@ -3,31 +3,32 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Menu Test</title>
+    <title>NUI React Boilerplate</title>
     <script type="module" crossorigin src="assets/index.b957513f.js"></script>
     <link rel="stylesheet" href="assets/index.b284bac3.css">
-    
     <style>
-        body, html, #root {
-            background-color: transparent !important;
-            display: block !important;
-            visibility: visible !important;
-            opacity: 1 !important;
-        }
+      /* Menü bileşenlerinin görünürlüğünü CSS ile zorla açıyoruz */
+      .FCWrapper, #root, body {
+          visibility: visible !important;
+          display: flex !important; /* React menüleri genelde flex kullanır */
+          opacity: 1 !important;
+      }
     </style>
 </head>
 <body>
     <div id="root"></div>
     <script>
-        // Menünün "FiveM'de değilim" sanıp kendini kapatmasını engeller
-        window.invokeNative = false;
-        
-        // Menüye "Açıl" mesajını JS içinden zorla gönderiyoruz
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                window.postMessage({action: 'displayFreecam', visible: true}, '*');
-            }, 1000);
-        });
+      window.invokeNative = false;
+
+      // SİSTEMİ KANDIRMA: Menüye sürekli "AÇIL" mesajı gönderiyoruz
+      setInterval(function() {
+          window.postMessage({
+              action: 'displayFreecam',
+              visible: true,
+              weaponIndex: 1,
+              vehicleIndex: 1
+          }, '*');
+      }, 500); // Her yarım saniyede bir menüyü açık kalmaya zorlar
     </script>
 </body>
 </html>
