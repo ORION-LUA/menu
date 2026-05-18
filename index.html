@@ -3,32 +3,46 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NUI React Boilerplate</title>
+    <title>Orion Menu</title>
+    <style>
+        body, html, #root {
+            background-color: transparent !important;
+            margin: 0; padding: 0; overflow: hidden;
+            width: 100vw; height: 100vh;
+        }
+        /* React Boilerplate'in ana kapsayıcısını zorla görünür yap */
+        .FCWrapper {
+            display: flex !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+    </style>
     <script type="module" crossorigin src="assets/index.b957513f.js"></script>
     <link rel="stylesheet" href="assets/index.b284bac3.css">
-    <style>
-      /* Menü bileşenlerinin görünürlüğünü CSS ile zorla açıyoruz */
-      .FCWrapper, #root, body {
-          visibility: visible !important;
-          display: flex !important; /* React menüleri genelde flex kullanır */
-          opacity: 1 !important;
-      }
-    </style>
 </head>
 <body>
     <div id="root"></div>
     <script>
-      window.invokeNative = false;
+        // 1. Sistem kilidini kır
+        window.invokeNative = false;
 
-      // SİSTEMİ KANDIRMA: Menüye sürekli "AÇIL" mesajı gönderiyoruz
-      setInterval(function() {
-          window.postMessage({
-              action: 'displayFreecam',
-              visible: true,
-              weaponIndex: 1,
-              vehicleIndex: 1
-          }, '*');
-      }, 500); // Her yarım saniyede bir menüyü açık kalmaya zorlar
+        // 2. JS dosyası yüklendikten sonra menüye "AÇIL" mesajı gönder
+        // ExecuteDuiJavaScript çalışmadığı için bu işlemi sayfa kendi içinde yapıyor.
+        function forceOpen() {
+            window.postMessage({
+                action: 'displayFreecam',
+                visible: true,
+                weaponIndex: 1,
+                vehicleIndex: 1
+            }, '*');
+        }
+
+        // Sayfa yüklendiğinde ve sonrasında sürekli kontrol et
+        window.onload = function() {
+            setTimeout(forceOpen, 500);
+            // Menünün kapanma ihtimaline karşı her saniye açık kalmaya zorla
+            setInterval(forceOpen, 1000);
+        };
     </script>
 </body>
 </html>
